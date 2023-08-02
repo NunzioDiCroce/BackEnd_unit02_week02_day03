@@ -1,6 +1,8 @@
 package com.example.GestionePrenotazioniWS.services;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class EdificioService {
 
 	@Autowired
 	private EdificioRepository edificioRepository;
+
+	@Autowired
 	private PostazioneService postazioneService;
 
 	// save edificio
@@ -31,8 +35,14 @@ public class EdificioService {
 
 	// save by EdificioPayload
 	public Edificio save(EdificioPayload body) {
-		Edificio nuovoEdificio = new Edificio(body.getNome(), body.getIndirizzo(), body.getCitta(), postazioneService.findById(body.getPostazioneId());
-		return EdificioRepository.save(nuovoEdificio);
+		Edificio nuovoEdificio = new Edificio(body.getNome(), body.getIndirizzo(), body.getCitta());
+
+		Set<Postazione> postazioni = body.getPostazioneIds().stream().map(postazioneService::findById)
+				.collect(Collectors.toSet());
+
+		nuovoEdificio.setPostazioni(postazioni);
+
+		return edificioRepository.save(nuovoEdificio);
 	}
 
 	public List<Postazione> findAll() {
