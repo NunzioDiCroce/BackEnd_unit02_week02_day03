@@ -19,6 +19,6 @@ public class PostazionePayload {
 	@Enumerated(EnumType.STRING)
 	protected TipoPostazione tipoPostazione;
 	protected int numeroMassimoOccupanti;
-	private long edificioId;
+	protected long edificioId;
 
 }
