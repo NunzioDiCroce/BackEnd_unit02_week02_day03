@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.GestionePrenotazioniWS.entities.Edificio;
 import com.example.GestionePrenotazioniWS.entities.EdificioPayload;
 import com.example.GestionePrenotazioniWS.entities.Postazione;
-import com.example.GestionePrenotazioniWS.entities.PostazionePayload;
 import com.example.GestionePrenotazioniWS.exceptions.ItemNotFoundException;
 import com.example.GestionePrenotazioniWS.repositories.EdificioRepository;
 
@@ -37,37 +36,43 @@ public class EdificioService {
 	public Edificio save(EdificioPayload body) {
 		Edificio nuovoEdificio = new Edificio(body.getNome(), body.getIndirizzo(), body.getCitta());
 
+		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
 		Set<Postazione> postazioni = body.getPostazioneIds().stream().map(postazioneService::findById)
 				.collect(Collectors.toSet());
-
+		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
 		nuovoEdificio.setPostazioni(postazioni);
 
 		return edificioRepository.save(nuovoEdificio);
 	}
 
-	public List<Postazione> findAll() {
-		return postazioneRepository.findAll();
+	public List<Edificio> findAll() {
+		return edificioRepository.findAll();
 	}
 
-	public Postazione findById(long _id) throws ItemNotFoundException {
-		return postazioneRepository.findById(_id).orElseThrow(() -> new ItemNotFoundException(_id));
+	public Edificio findById(long _id) throws ItemNotFoundException {
+		return edificioRepository.findById(_id).orElseThrow(() -> new ItemNotFoundException(_id));
 
 	}
 
-	public Postazione findByIdAndUpdate(long id, PostazionePayload body) throws ItemNotFoundException {
-		Postazione found = this.findById(id);
+	public Edificio findByIdAndUpdate(long id, EdificioPayload body) throws ItemNotFoundException {
+		Edificio found = this.findById(id);
 
-		found.setDescrizione(body.getDescrizione());
-		found.setTipoPostazione(body.getTipoPostazione());
-		found.setNumeroMassimoOccupanti(body.getNumeroMassimoOccupanti());
-		found.setEdificio(body.getEdificio());
+		found.setNome(body.getNome());
+		found.setIndirizzo(body.getIndirizzo());
+		found.setCitta(body.getCitta());
 
-		return postazioneRepository.save(found);
+		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
+		Set<Postazione> postazioni = body.getPostazioneIds().stream().map(postazioneService::findById)
+				.collect(Collectors.toSet());
+		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
+		found.setPostazioni(postazioni);
+
+		return edificioRepository.save(found);
 	}
 
 	public void findByIdAndDelete(long id) throws ItemNotFoundException {
-		Postazione found = this.findById(id);
-		postazioneRepository.delete(found);
+		Edificio found = this.findById(id);
+		edificioRepository.delete(found);
 	}
 
 }
