@@ -20,6 +20,7 @@ public class EdificioService {
 
 	@Autowired
 	private EdificioRepository edificioRepository;
+	private PostazioneService postazioneService;
 
 	// save edificio
 	public void save(Edificio _edificio) {
@@ -30,7 +31,7 @@ public class EdificioService {
 
 	// save by EdificioPayload
 	public Edificio save(EdificioPayload body) {
-		Edificio nuovoEdificio = new Edificio(body.getNome(), body.getIndirizzo(), body.getCitta(), edificio);
+		Edificio nuovoEdificio = new Edificio(body.getNome(), body.getIndirizzo(), body.getCitta(), postazioneService.findById(body.getPostazioneId());
 		return EdificioRepository.save(nuovoEdificio);
 	}
 

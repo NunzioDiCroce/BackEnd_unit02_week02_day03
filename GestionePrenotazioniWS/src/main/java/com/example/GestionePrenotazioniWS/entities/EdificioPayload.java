@@ -1,5 +1,7 @@
 package com.example.GestionePrenotazioniWS.entities;
 
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +14,6 @@ public class EdificioPayload {
 	protected String nome;
 	protected String indirizzo;
 	protected String citta;
-	protected long postazioneid;
+	protected Set<Long> postazioneIds;
 
 }
