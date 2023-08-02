@@ -29,7 +29,7 @@ public class PostazioneService {
 	// save by PostazionePayload
 	public Postazione save(PostazionePayload body) {
 		Postazione nuovaPostazione = new Postazione(body.getDescrizione(), body.getTipoPostazione(),
-				body.getNumeroMassimoOccupanti(), body.getEdificio());
+				body.getNumeroMassimoOccupanti(), edificio);
 		return postazioneRepository.save(nuovaPostazione);
 	}
 
