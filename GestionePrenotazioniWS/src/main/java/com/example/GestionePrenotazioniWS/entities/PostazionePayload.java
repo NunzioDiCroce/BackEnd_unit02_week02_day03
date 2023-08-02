@@ -4,11 +4,12 @@ import com.example.GestionePrenotazioniWS.enums.TipoPostazione;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 
 public class PostazionePayload {
@@ -17,10 +18,7 @@ public class PostazionePayload {
 
 	@Enumerated(EnumType.STRING)
 	protected TipoPostazione tipoPostazione;
-
 	protected int numeroMassimoOccupanti;
-
-	@ManyToOne
-	private Edificio edificio;
+	private long edificioId;
 
 }
