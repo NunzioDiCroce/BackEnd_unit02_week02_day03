@@ -2,8 +2,6 @@ package com.example.GestionePrenotazioniWS;
 
 import java.util.Set;
 
-import com.example.GestionePrenotazioni.Prenotazione;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
