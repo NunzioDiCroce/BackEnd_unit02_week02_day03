@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.GestionePrenotazioniWS.entities.Edificio;
+import com.example.GestionePrenotazioniWS.entities.EdificioPayload;
 import com.example.GestionePrenotazioniWS.entities.Postazione;
 import com.example.GestionePrenotazioniWS.entities.PostazionePayload;
 import com.example.GestionePrenotazioniWS.exceptions.ItemNotFoundException;
@@ -28,10 +29,9 @@ public class EdificioService {
 	}
 
 	// save by EdificioPayload
-	public Postazione save(PostazionePayload body) {
-		Postazione nuovaPostazione = new Postazione(body.getDescrizione(), body.getTipoPostazione(),
-				body.getNumeroMassimoOccupanti(), edificio);
-		return postazioneRepository.save(nuovaPostazione);
+	public Edificio save(EdificioPayload body) {
+		Edificio nuovoEdificio = new Edificio(body.getNome(), body.getIndirizzo(), body.getCitta(), edificio);
+		return EdificioRepository.save(nuovoEdificio);
 	}
 
 	public List<Postazione> findAll() {
