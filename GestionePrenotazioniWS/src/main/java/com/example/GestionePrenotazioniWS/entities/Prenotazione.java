@@ -1,4 +1,4 @@
-package com.example.GestionePrenotazioniWS;
+package com.example.GestionePrenotazioniWS.entities;
 
 import java.time.LocalDate;
 

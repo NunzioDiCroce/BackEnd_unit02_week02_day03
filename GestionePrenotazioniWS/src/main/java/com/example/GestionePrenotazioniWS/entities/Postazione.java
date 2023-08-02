@@ -1,6 +1,8 @@
-package com.example.GestionePrenotazioniWS;
+package com.example.GestionePrenotazioniWS.entities;
 
 import java.util.Set;
+
+import com.example.GestionePrenotazioniWS.enums.TipoPostazione;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

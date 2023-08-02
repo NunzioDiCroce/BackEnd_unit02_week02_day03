@@ -1,4 +1,4 @@
-package com.example.GestionePrenotazioniWS;
+package com.example.GestionePrenotazioniWS.enums;
 
 public enum TipoPostazione {
 	PRIVATO, OPENSPACE, SALARIUNIONI
