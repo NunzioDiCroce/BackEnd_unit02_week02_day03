@@ -43,7 +43,7 @@ public class PrenotazioneService {
 
 	// METHOD WITH CUSTOM QUERY
 	@Transactional
-	public void effettuaPrenotazione(PrenotazionePayload body) {
+	public Prenotazione effettuaPrenotazione(PrenotazionePayload body) {
 
 		Prenotazione prenotazionePostazione = prenotazioneRepository.findByDataPrenotazioneAndPostazione(
 				body.getDataPrenotazione(), postazioneService.findById(body.getPostazioneId()));
@@ -60,10 +60,11 @@ public class PrenotazioneService {
 		} else {
 			Prenotazione nuovaPrenotazione = new Prenotazione(utenteService.findById(body.getUtenteId()),
 					body.getDataPrenotazione(), postazioneService.findById(body.getPostazioneId()));
-			prenotazioneRepository.save(nuovaPrenotazione);
-			log.info("Prenotazione con ID " + nuovaPrenotazione.getId() + " salvata con successo.");
+			return prenotazioneRepository.save(nuovaPrenotazione);
+			// log.info("Prenotazione con ID " + nuovaPrenotazione.getId() + " salvata con
+			// successo.");
 		}
-
+		return null;
 	}
 
 	public List<Prenotazione> findAll() {
