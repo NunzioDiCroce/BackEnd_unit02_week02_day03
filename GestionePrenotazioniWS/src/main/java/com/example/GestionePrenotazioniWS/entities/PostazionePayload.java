@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-
 public class PostazionePayload {
 
 	protected String descrizione;
