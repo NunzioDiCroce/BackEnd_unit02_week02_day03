@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.GestionePrenotazioniWS.entities.Edificio;
@@ -19,11 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EdificioService {
 
-	@Autowired
-	private EdificioRepository edificioRepository;
+	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
+	private final EdificioRepository edificioRepository;
 
-	@Autowired
-	private PostazioneService postazioneService;
+	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
+	private final PostazioneService postazioneService;
 
 	// save edificio
 	public void save(Edificio _edificio) {

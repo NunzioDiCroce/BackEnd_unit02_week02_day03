@@ -16,11 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PostazioneService {
 
-	@Autowired
-	private PostazioneRepository postazioneRepository;
+	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
+	private final PostazioneRepository postazioneRepository;
+	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
+	private final EdificioService edificioService;
 
+	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
 	@Autowired
-	private EdificioService edificioService;
+	public PostazioneService(PostazioneRepository postazioneRepository, EdificioService edificioService) {
+		this.postazioneRepository = postazioneRepository;
+		this.edificioService = edificioService;
+	}
 
 	// save postazione
 	public void save(Postazione _postazione) {
@@ -51,6 +57,7 @@ public class PostazioneService {
 		found.setDescrizione(body.getDescrizione());
 		found.setTipoPostazione(body.getTipoPostazione());
 		found.setNumeroMassimoOccupanti(body.getNumeroMassimoOccupanti());
+		found.setEdificio(edificioService.findById(body.getEdificioId()));
 
 		return postazioneRepository.save(found);
 	}
