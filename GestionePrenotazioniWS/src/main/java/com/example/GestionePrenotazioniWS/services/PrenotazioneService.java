@@ -41,7 +41,7 @@ public class PrenotazioneService {
 		return prenotazioneRepository.save(nuovaPrenotazione);
 	}
 
-	// - - - - - - - - - - - - - - - METODO CON CUSTOM QUERY
+	// METHOD WITH CUSTOM QUERY
 	@Transactional
 	public void effettuaPrenotazione(PrenotazionePayload body) {
 
@@ -58,9 +58,10 @@ public class PrenotazioneService {
 			log.warn(
 					"Non è possibile salvare la prenotazione, l'utente ha già una prenotazione per la data desiderata.");
 		} else {
-			Prenotazione prenotazione = new Prenotazione(utente, dataPrenotazione, postazione);
-			prenotazioneRepository.save(prenotazione);
-			log.info("Prenotazione con ID " + prenotazione.getId() + " salvata con successo.");
+			Prenotazione nuovaPrenotazione = new Prenotazione(utenteService.findById(body.getUtenteId()),
+					body.getDataPrenotazione(), postazioneService.findById(body.getPostazioneId()));
+			prenotazioneRepository.save(nuovaPrenotazione);
+			log.info("Prenotazione con ID " + nuovaPrenotazione.getId() + " salvata con successo.");
 		}
 
 	}
