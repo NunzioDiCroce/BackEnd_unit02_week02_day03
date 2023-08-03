@@ -19,6 +19,9 @@ public class PostazioneService {
 	@Autowired
 	private PostazioneRepository postazioneRepository;
 
+	@Autowired
+	private EdificioService edificioService;
+
 	// save postazione
 	public void save(Postazione _postazione) {
 		postazioneRepository.save(_postazione);
@@ -29,7 +32,7 @@ public class PostazioneService {
 	// save by PostazionePayload
 	public Postazione save(PostazionePayload body) {
 		Postazione nuovaPostazione = new Postazione(body.getDescrizione(), body.getTipoPostazione(),
-				body.getNumeroMassimoOccupanti(), edificio);
+				body.getNumeroMassimoOccupanti(), edificioService.findById(body.getEdificioId()));
 		return postazioneRepository.save(nuovaPostazione);
 	}
 
@@ -48,7 +51,6 @@ public class PostazioneService {
 		found.setDescrizione(body.getDescrizione());
 		found.setTipoPostazione(body.getTipoPostazione());
 		found.setNumeroMassimoOccupanti(body.getNumeroMassimoOccupanti());
-		found.setEdificio(body.getEdificio());
 
 		return postazioneRepository.save(found);
 	}
