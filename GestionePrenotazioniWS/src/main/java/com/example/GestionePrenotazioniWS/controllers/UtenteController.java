@@ -29,7 +29,6 @@ public class UtenteController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Utente saveUser(@RequestBody UtentePayload body) {
 		Utente created = utenteService.save(body);
-
 		return created;
 	}
 
