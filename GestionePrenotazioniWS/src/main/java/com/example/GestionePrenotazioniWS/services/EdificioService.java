@@ -20,9 +20,14 @@ public class EdificioService {
 
 	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
 	private final EdificioRepository edificioRepository;
-
 	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
 	private final PostazioneService postazioneService;
+
+	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
+	public EdificioService(EdificioRepository edificioRepository, PostazioneService postazioneService) {
+		this.edificioRepository = edificioRepository;
+		this.postazioneService = postazioneService;
+	}
 
 	// save edificio
 	public void save(Edificio _edificio) {
