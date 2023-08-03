@@ -20,7 +20,6 @@ public class PostazioneService {
 	private final PostazioneRepository postazioneRepository;
 	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
 	private final EdificioService edificioService;
-
 	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
 	@Autowired
 	public PostazioneService(PostazioneRepository postazioneRepository, EdificioService edificioService) {

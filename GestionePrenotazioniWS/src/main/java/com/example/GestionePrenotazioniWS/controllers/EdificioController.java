@@ -22,8 +22,12 @@ import com.example.GestionePrenotazioniWS.services.EdificioService;
 @RequestMapping("/edifici")
 public class EdificioController {
 
+	private final EdificioService edificioService;
+
 	@Autowired
-	private EdificioService edificioService;
+	public EdificioController(EdificioService edificioService) {
+		this.edificioService = edificioService;
+	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)

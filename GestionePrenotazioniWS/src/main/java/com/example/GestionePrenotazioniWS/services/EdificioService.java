@@ -1,14 +1,11 @@
 package com.example.GestionePrenotazioniWS.services;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.example.GestionePrenotazioniWS.entities.Edificio;
 import com.example.GestionePrenotazioniWS.entities.EdificioPayload;
-import com.example.GestionePrenotazioniWS.entities.Postazione;
 import com.example.GestionePrenotazioniWS.exceptions.ItemNotFoundException;
 import com.example.GestionePrenotazioniWS.repositories.EdificioRepository;
 
@@ -21,12 +18,12 @@ public class EdificioService {
 	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
 	private final EdificioRepository edificioRepository;
 	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
-	private final PostazioneService postazioneService;
+//	private final PostazioneService postazioneService;
 
 	// * * * * * TO HANDLE CIRCULAR DEPENDENCY POSTAZIONE-EDIFICIO * * * * *
-	public EdificioService(EdificioRepository edificioRepository, PostazioneService postazioneService) {
+	public EdificioService(EdificioRepository edificioRepository) {
 		this.edificioRepository = edificioRepository;
-		this.postazioneService = postazioneService;
+//		this.postazioneService = postazioneService;
 	}
 
 	// save edificio
@@ -40,11 +37,11 @@ public class EdificioService {
 	public Edificio save(EdificioPayload body) {
 		Edificio nuovoEdificio = new Edificio(body.getNome(), body.getIndirizzo(), body.getCitta());
 
-		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
-		Set<Postazione> postazioni = body.getPostazioneIds().stream().map(postazioneService::findById)
-				.collect(Collectors.toSet());
-		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
-		nuovoEdificio.setPostazioni(postazioni);
+//		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
+//		Set<Postazione> postazioni = body.getPostazioneIds().stream().map(postazioneService::findById)
+//				.collect(Collectors.toSet());
+//		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
+//		nuovoEdificio.setPostazioni(postazioni);
 
 		return edificioRepository.save(nuovoEdificio);
 	}
@@ -65,11 +62,11 @@ public class EdificioService {
 		found.setIndirizzo(body.getIndirizzo());
 		found.setCitta(body.getCitta());
 
-		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
-		Set<Postazione> postazioni = body.getPostazioneIds().stream().map(postazioneService::findById)
-				.collect(Collectors.toSet());
-		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
-		found.setPostazioni(postazioni);
+//		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
+//		Set<Postazione> postazioni = body.getPostazioneIds().stream().map(postazioneService::findById)
+//				.collect(Collectors.toSet());
+//		// * * * * * TO HANDLE ONETOMANY RELATION * * * * *
+//		found.setPostazioni(postazioni);
 
 		return edificioRepository.save(found);
 	}
