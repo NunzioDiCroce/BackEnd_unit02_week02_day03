@@ -3,6 +3,7 @@ package com.example.GestionePrenotazioniWS.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.GestionePrenotazioniWS.entities.Prenotazione;
 import com.example.GestionePrenotazioniWS.entities.PrenotazionePayload;
@@ -38,6 +39,30 @@ public class PrenotazioneService {
 		Prenotazione nuovaPrenotazione = new Prenotazione(utenteService.findById(body.getUtenteId()),
 				body.getDataPrenotazione(), postazioneService.findById(body.getPostazioneId()));
 		return prenotazioneRepository.save(nuovaPrenotazione);
+	}
+
+	// - - - - - - - - - - - - - - - METODO CON CUSTOM QUERY
+	@Transactional
+	public void effettuaPrenotazione(PrenotazionePayload body) {
+
+		Prenotazione prenotazionePostazione = prenotazioneRepository
+				.findByDataPrenotazioneAndPostazione(dataPrenotazione, postazione);
+
+		Prenotazione prenotazioneUtente = prenotazioneRepository.findByDataPrenotazioneAndUtente(dataPrenotazione,
+				utente);
+
+		if (prenotazionePostazione != null) {
+			log.warn(
+					"Non è possibile salvare la prenotazione, esiste già una prenotazione per la data e la postazione desiderata.");
+		} else if (prenotazioneUtente != null) {
+			log.warn(
+					"Non è possibile salvare la prenotazione, l'utente ha già una prenotazione per la data desiderata.");
+		} else {
+			Prenotazione prenotazione = new Prenotazione(utente, dataPrenotazione, postazione);
+			prenotazioneRepository.save(prenotazione);
+			log.info("Prenotazione con ID " + prenotazione.getId() + " salvata con successo.");
+		}
+
 	}
 
 	public List<Prenotazione> findAll() {
