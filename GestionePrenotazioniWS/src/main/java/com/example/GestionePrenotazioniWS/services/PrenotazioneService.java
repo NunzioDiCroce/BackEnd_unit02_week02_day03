@@ -45,11 +45,11 @@ public class PrenotazioneService {
 	@Transactional
 	public void effettuaPrenotazione(PrenotazionePayload body) {
 
-		Prenotazione prenotazionePostazione = prenotazioneRepository
-				.findByDataPrenotazioneAndPostazione(dataPrenotazione, postazione);
+		Prenotazione prenotazionePostazione = prenotazioneRepository.findByDataPrenotazioneAndPostazione(
+				body.getDataPrenotazione(), postazioneService.findById(body.getPostazioneId()));
 
-		Prenotazione prenotazioneUtente = prenotazioneRepository.findByDataPrenotazioneAndUtente(dataPrenotazione,
-				utente);
+		Prenotazione prenotazioneUtente = prenotazioneRepository.findByDataPrenotazioneAndUtente(
+				body.getDataPrenotazione(), utenteService.findById(body.getUtenteId()));
 
 		if (prenotazionePostazione != null) {
 			log.warn(
